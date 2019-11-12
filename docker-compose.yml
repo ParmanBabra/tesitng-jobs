@@ -1,25 +1,5 @@
 version: '3'
 services: 
-  mongo:
-    image: bitnami/mongodb
-    restart: always
-    environment:
-      MONGODB_ROOT_PASSWORD: password123
-      ALLOW_EMPTY_PASSWORD: 'true'
-      MONGODB_DATABASE: scg-testing-data
-      MONGODB_USERNAME: admin
-      MONGODB_PASSWORD: password123
-    volumes: 
-      - mongodb_data:/bitnami
-  mongo-express:
-    image: mongo-express
-    environment: 
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password123
-    ports:
-      - 8081:8081
-    depends_on:
-      - mongo
   client:
     build: 
       context: ./client
@@ -27,8 +7,10 @@ services:
     volumes: 
       - /app/node_modules
       - ./client:/app
+    ports:
+      - '3000:3000'
     environment: 
-      REACT_APP_API_HOST: http://localhost:3001
+      REACT_APP_API_HOST: https://gentle-caverns-48044.herokuapp.com
     depends_on:
       - api
   api:
@@ -38,40 +20,26 @@ services:
     volumes: 
       - /app/node_modules
       - ./server:/app
+    ports:
+      - '3001:3001'
     environment:
       NODE_ENV: development
       PASSWORD_SALT: mysupersecret
       TOKEN_SECRET: MY_SECRET_KEY
-      MONGO_DATABASE: scg-testing-data
-      MONGO_USERNAME: admin
-      MONGO_PASSWORD: password123
-    depends_on:
-      - mongo
-  map-worker:
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./map-worker
-    volumes: 
-      - /app/node_modules
-      - ./map-worker:/app
-    environment:
-      MONGO_DATABASE: scg-testing-data
-      MONGO_USERNAME: admin
-      MONGO_PASSWORD: password123
-      GOOGLE_API_KEY: AIzaSyC8iaDOAP3SpcjlOts_3cnqL8BWi51yL3o
-    depends_on:
-      - mongo
-  nginx:
-    restart: always
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./nginx
-    ports:
-      - '80:80'
-      - '443:443'
-    depends_on:
-      - api
-      - client
-volumes:
-  mongodb_data:
-    driver: local
+      MONGO_DATABASE: test
+      MONGO_USERNAME: sa
+      MONGO_PASSWORD: EfV2GPSZYCW8Ece
+      CHANNEL_ACCESS_TOKEN: N689f+MD0f2+XiywAtNF4LiA5ZW23p61GQYvphsoKh15lL6kniso7ow6CCrsHSh230eJ4ndDS0vQUV5Ubou7Uif9jfyzHhVIKLJ0L3NOCZZVl87LwrTYZMYDmEkhe/UtMO2XtOT0RLQ1c9hTKn/puAdB04t89/1O/w1cDnyilFU=
+      CHANNEL_SECRET: 84631887f660c5bc7e18d0c3565c8c70
+  # map-worker:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./map-worker
+  #   volumes: 
+  #     - /app/node_modules
+  #     - ./map-worker:/app
+  #   environment:
+  #     MONGO_DATABASE: test
+  #     MONGO_USERNAME: sa
+  #     MONGO_PASSWORD: EfV2GPSZYCW8Ece
+  #     GOOGLE_API_KEY: AIzaSyC8iaDOAP3SpcjlOts_3cnqL8BWi51yL3o

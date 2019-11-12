@@ -106,8 +106,8 @@ let query = async () => {
 
 mongoose
   .connect(
-    `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@mongo/${process.env.MONGO_DATABASE}`,
-    { useNewUrlParser: true }
+    `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0-jhdn2.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(async () => {
     await query();

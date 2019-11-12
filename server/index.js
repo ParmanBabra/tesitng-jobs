@@ -2,21 +2,31 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const scg = require("./controllers/scg");
-const app = express();
+const webhook = require("./controllers/line-webhook");
 
+const app = express();
 
 app.use(cors());
 app.use("/scg", scg);
 
-console.log(`connection string : mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@mongo/${process.env.MONGO_DATABASE}`)
+app.use("/webhook", webhook.middleware(), (req, res) => {
+  Promise.all(req.body.events.map(webhook.handleLineEvent))
+    .then(result => res.json(result))
+    .catch(err => {
+      console.error(err);
+      res.status(500).end();
+    });
+});
+
+const port = process.env.PORT || 3001;
 
 mongoose
   .connect(
-    `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@mongo/${process.env.MONGO_DATABASE}`,
+    `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0-jhdn2.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`,
     { useNewUrlParser: true }
   )
   .then(() => {
-    app.listen({ port: 3001 }, () => {
+    app.listen({ port }, () => {
       console.log(`API SERVER START`);
     });
   })

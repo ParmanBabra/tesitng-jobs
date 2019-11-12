@@ -1,36 +1,51 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import 'bootstrap/dist/css/bootstrap.css';
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import reducers from "./reducers";
+import "bootstrap/dist/css/bootstrap.css";
 import "index.css";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import App from "components/App/App";
-import Login from "components/Login/login";
 
 import * as serviceWorker from "serviceWorker";
 
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import {
+  faUtensils,
+  faMapMarker,
+  faAddressCard,
+  faPhone,
+  faEnvelope,
+  faBrush,
+  faPlug,
+  faProjectDiagram,
+  faFilm
+} from "@fortawesome/free-solid-svg-icons";
 
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_API_HOST
-});
+library.add(
+  fab,
+  faUtensils,
+  faMapMarker,
+  faAddressCard,
+  faPhone,
+  faEnvelope,
+  faBrush,
+  faPlug,
+  faProjectDiagram,
+  faFilm
+);
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-      <Router>
-        <Switch>
-          <Route path="/login">
-          <Login />
-          </Route>
-          <Route path="/">
-            <App />
-          </Route>
-        </Switch>
-        
-      </Router>
-  </ApolloProvider>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById("root")
 );
 

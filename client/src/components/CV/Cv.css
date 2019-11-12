@@ -1,0 +1,78 @@
+.image {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.image > img {
+  max-width: 100%;
+}
+.overpoint {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.line {
+  background: rgb(41, 186, 189);
+  height: 10px;
+  width: 40px;
+  margin-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+.overlap-row {
+  margin-top: -140px;
+}
+
+.overlap-row > .name {
+  background: rgba(41, 186, 189, 0.7);
+  padding-left: 45px;
+}
+
+.overlap-row > .name > .inner-name {
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+
+.contact > .inner-contact {
+  padding-bottom: 25px;
+  padding-top: 25px;
+  padding-left: 20px;
+  margin-left: 0px;
+}
+
+.icon {
+  padding: 2px 5px;
+  margin: 2px 10px;
+  background: rgb(41, 186, 189);
+  border-radius: 5px;
+}
+
+.icon-sm {
+  padding: 0px 5px;
+  margin: 0px 6px;
+  background: rgb(41, 186, 189);
+  border-radius: 5px;
+}
+.column-exp-1 {
+  background: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+.column-exp-1 > .inner {
+  padding: 30px;
+}
+
+.column-exp-2 {
+}
+
+.column-exp-2 > .inner {
+  padding: 30px;
+}
+
+.label-experience {
+}
+
+.new-line {
+  margin-top: 10px;
+  background: #6c757d;
+  width: 100%;
+}
