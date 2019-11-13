@@ -26,19 +26,19 @@ const handleLineEvent = async event => {
       break;
     case "postback":
       let params = getPostbackData(event.postback.data);
-      let userId = event.source.userId;
+      let userId = "U49de5592bb61704f93ebcf3cdf38b0da"; //event.source.userId;
       console.log(params);
       switch (params.action) {
         case "AddCart":
           let user = await User.findOne({ userId });
           let items = user.itemCart;
           let item = _.find(params.itemid);
-          
+
           if (!item) {
             items.push(params.itemid);
             await user.update({ itemCart: items });
-            echoMessage = { type: "text", text: "เพิ่มเรียบร้อยแล้วค่ะ" };
           }
+          echoMessage = { type: "text", text: "เพิ่มเรียบร้อยแล้วค่ะ" };
           break;
         case "Detail":
           let product = await Product.findById(params.itemid);
