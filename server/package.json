@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -L",
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy": "heroku container:push web --app gentle-caverns-48044 && heroku container:release web --app gentle-caverns-48044"
   },
   "author": "",
   "license": "ISC",
