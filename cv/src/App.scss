@@ -1,0 +1,148 @@
+html {
+  scroll-behavior: smooth;
+}
+
+#root {
+  .navbar {
+    padding: 1.5rem 2rem;
+
+    .navbar-brand {
+      flex-grow: 1;
+      font-size: 2rem;
+    }
+
+    .navbar-collapse {
+      flex-grow: 0;
+    }
+  }
+
+  .parallax {
+    background-image: url("https://www.simpson-associates.co.uk/wp-content/uploads/2018/02/2086-network-2880x1800-abstract-wallpaper.jpg");
+
+    height: 600px;
+
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .section-info {
+    margin-top: -490px;
+    .panel {
+      background-color: white;
+      .panel-image {
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+
+      .panel-detail {
+        margin: 4rem;
+
+        .label-info {
+          margin-bottom: 0px;
+        }
+
+        .label-info-value {
+          margin-bottom: 0.25rem;
+        }
+      }
+    }
+  }
+  .section-hello {
+    background-color: #f1f1f1;
+
+    .contact {
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      background-color: rgba(24, 33, 83, 1);
+      .icon {
+        color: white;
+        padding: 0px 20px;
+      }
+    }
+    .hello {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+
+      .lead {
+        text-align: center;
+        max-width: 60%;
+        margin: 0px 25px;
+      }
+    }
+  }
+  ul.timeline {
+    list-style-type: none;
+    position: relative;
+    margin-left: 40%;
+
+    &:before {
+      content: " ";
+      background: #d4d9df;
+      display: inline-block;
+      position: absolute;
+      left: 29px;
+      width: 2px;
+      height: 100%;
+      z-index: 400;
+    }
+
+    > li {
+      margin: 20px 0;
+      padding-left: 20px;
+
+      .content {
+        &:before {
+          content: " ";
+          background: white;
+          display: inline-block;
+          position: absolute;
+          border-radius: 50%;
+          border: 5px solid #000000;
+          left: 25px;
+          width: 10px;
+          height: 10px;
+          z-index: 400;
+        }
+      }
+
+      .header {
+        position: absolute;
+        margin-left: -50%;
+        width: 40%;
+        text-align: right;
+      }
+    }
+  }
+
+  #skills {
+    color: white;
+    background: #182153;
+    .parallax {
+      border-top: 1px solid white;
+      background-image: url("/blue-lines.png");
+      height: auto;
+
+      .outer-skill {
+        padding: 15px;
+      }
+
+      .skill {
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.25);
+      }
+    }
+  }
+
+  #contact {
+    background: #f1f1f1;
+    .btn-primary {
+      background: #182153;
+      border-color: #182153;
+    }
+  }
+}

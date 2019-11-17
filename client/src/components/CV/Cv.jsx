@@ -9,7 +9,7 @@ export default class Cv extends Component {
       <Fragment>
         <div className="row">
           <div className="col-4 image">
-            <img src="/profile.jpg" />
+            <img src="/profile.jpg"  />
           </div>
           <div className="col-8 text-left">
             <div class="overpoint">
