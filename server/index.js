@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const scg = require("./controllers/scg");
-const webhook = require("./controllers/line-webhook");
+const webhook = require("./controllers/webhook");
 
 const app = express();
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 app.use(cors());
 app.use("/scg", scg);
 
