@@ -56,20 +56,21 @@ const sendDialogflow = async (event, req) => {
         ...datas[userId],
         ...{ notebookType: notebookType.stringValue }
       };
+      
       break;
     case "AskListing.AskListing.Select-Type":
       let prices = result.parameters.fields["number"].listValue.values;
+
       let price = {
         min: null,
         max: null,
         value: null
       };
+
       if (prices.length > 1) {
-        console.log(prices);
         price.min = Math.min(prices[0].numberValue, prices[1].numberValue);
         price.max = Math.max(prices[0].numberValue, prices[1].numberValue);
       } else {
-        console.log(prices);
         price.value = prices[0].numberValue;
       }
 
@@ -106,12 +107,8 @@ const handleListProduct = async (args, req) => {
   } else if (args.priceRange == "น้อยกว่า") {
     query.price = { $lte: args.value };
   } else {
-    query.result = {
-      $and: [{ $gt: ["$price", args.min] }, { $lt: ["$price", args.max] }]
-    };
+    query.$and = [{ "price": { $gt: args.min } }, { "price": { $lt: args.max } }];
   }
-
-  console.log(query);
 
   let results = await Product.find(query);
 
