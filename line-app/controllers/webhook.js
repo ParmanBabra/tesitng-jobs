@@ -1,6 +1,6 @@
 const line = require("@line/bot-sdk");
 const dialogflow = require("dialogflow");
-const uuid = require("uuid");
+const util = require("util");
 const _ = require("lodash");
 const menu = require("./menu").menu;
 const Product = require("./../models/product");
@@ -58,12 +58,26 @@ const sendDialogflow = async (event, req) => {
       };
       break;
     case "AskListing.AskListing.Select-Type":
-      let price = result.parameters.fields["number"];
+      let prices = result.parameters.fields["number"].listValue.values;
+      let price = {
+        min: null,
+        max: null,
+        value: null
+      };
+      if (prices.length > 1) {
+        console.log(prices);
+        price.min = Math.min(prices[0].numberValue, prices[1].numberValue);
+        price.max = Math.max(prices[0].numberValue, prices[1].numberValue);
+      } else {
+        console.log(prices);
+        price.value = prices[0].numberValue;
+      }
+
       let priceRange = result.parameters.fields["Price-Range"];
       datas[userId] = {
         ...datas[userId],
+        ...price,
         ...{
-          price: price.numberValue,
           priceRange: priceRange.stringValue
         }
       };
@@ -87,12 +101,17 @@ const sendDialogflow = async (event, req) => {
 
 const handleListProduct = async (args, req) => {
   let query = { type: { $all: [args.notebookType] } };
-  query.price = {};
   if (args.priceRange == "มากกว่า") {
-    query.price.$gte = args.price;
+    query.price = { $gte: args.value };
+  } else if (args.priceRange == "น้อยกว่า") {
+    query.price = { $lte: args.value };
   } else {
-    query.price.$lte = args.price;
+    query.result = {
+      $and: [{ $gt: ["$price", args.min] }, { $lt: ["$price", args.max] }]
+    };
   }
+
+  console.log(query);
 
   let results = await Product.find(query);
 
